@@ -14,13 +14,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-if(DEFINED ENV{GITHUB_HEAD_REF})
-  set(BRANCH_NAME $ENV{GITHUB_HEAD_REF})
-else()
-  set(BRANCH_NAME "lab1") # Default branch for local builds
-  message(STATUS "Not running in GitHub Actions context. Building ${BRANCH_NAME}.")
+if(NOT DEFINED BRANCH_NAME)
+    if(DEFINED ENV{GITHUB_HEAD_REF})
+        set(BRANCH_NAME $ENV{GITHUB_HEAD_REF})
+    else()
+        set(BRANCH_NAME "lab1") # Default branch
+    endif()
 endif()
-
 message(STATUS "BRANCH_NAME is set to: ${BRANCH_NAME}")
 
 file(GLOB contents "${CMAKE_SOURCE_DIR}/solutions/*")
