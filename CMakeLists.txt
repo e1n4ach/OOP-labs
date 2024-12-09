@@ -30,7 +30,19 @@ message(STATUS "Checking path: ${CMAKE_SOURCE_DIR}/solutions/${BRANCH_NAME}")
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/solutions/${BRANCH_NAME}")
     message(STATUS "Directory exists: ${CMAKE_SOURCE_DIR}/solutions/${BRANCH_NAME}")
+    
+    if(BRANCH_NAME STREQUAL "lab6" OR BRANCH_NAME STREQUAL "lab7")
+    add_library(${BRANCH_NAME}_lib STATIC
+    solutions/${BRANCH_NAME}/src/bear.cpp
+    solutions/${BRANCH_NAME}/src/npc.cpp
+    solutions/${BRANCH_NAME}/src/vup.cpp
+    solutions/${BRANCH_NAME}/src/factory.cpp
+    solutions/${BRANCH_NAME}/src/visitor.cpp
+    solutions/${BRANCH_NAME}/src/vykhuhol.cpp)
+    else()
     add_library(${BRANCH_NAME}_lib STATIC solutions/${BRANCH_NAME}/src/solution.cpp)
+    endif()
+
     add_executable(${BRANCH_NAME}_exe solutions/${BRANCH_NAME}/main.cpp)
     add_executable(${BRANCH_NAME}_tests solutions/${BRANCH_NAME}/tests/tests.cpp)
     target_link_libraries(${BRANCH_NAME}_exe PRIVATE ${BRANCH_NAME}_lib)
